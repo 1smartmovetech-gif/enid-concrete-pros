@@ -22,3 +22,17 @@
   - Interactive filtering and highlighting
 - Florida property: still no prior record; need details from Nathan/Julia.
 - Nathan requested migration of OpenClaw workspace to personal computer. Created `openclaw_migration_checklist.md` with step‑by‑step instructions.
+- Nathan wants an external searchable dashboard for prior tasks/conversations, with daily memory files used as short‑term cache.
+
+## 2026‑03‑26 (Thursday)
+- OpenClaw rescue/fallback setup expanded:
+  - Dedicated rescue agent configured with separate workspace
+  - Additional providers/models added: Groq, xAI/Grok, OpenRouter, OpenAI, Anthropic
+  - Model aliases available including `groq`, `grok`, `openrouter`, `gpt`, and `rescue`
+- Support docs saved to `troubleshooting/OpenClaw_Support_Docs.txt`.
+- Nathan uses Linux Kubuntu with Node.js 22 for planned local OpenClaw migration.
+- Nathan wants topic-based organization in Discord for conversations and workstreams.
+
+## Durable Themes
+- Communication platform preference is shifting toward Discord for better topic organization.
+- Nathan values persistent memory, searchable history, and structured project notes over chat-only context.
