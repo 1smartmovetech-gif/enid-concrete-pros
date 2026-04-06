@@ -33,6 +33,9 @@
 - Nathan uses Linux Kubuntu with Node.js 22 for planned local OpenClaw migration.
 - Nathan wants topic-based organization in Discord for conversations and workstreams.
 
+## 2026‑04‑06 (Monday)
+- Colten Vargas from Facebook sent the Stillwater deal at 217 S Lowry St, Stillwater, OK 74074.
+
 ## Durable Themes
 - Communication platform preference is shifting toward Discord for better topic organization.
 - Nathan values persistent memory, searchable history, and structured project notes over chat-only context.

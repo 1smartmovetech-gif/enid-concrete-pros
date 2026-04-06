@@ -10,6 +10,7 @@ Active / ongoing.
 - Evansville property was listed for $875/month on owner financing
 - Selling help was needed
 - Florida property inquiry existed via teammate Julia, but prior details were still missing
+- Colten Vargas (Facebook) sent the Stillwater deal at 217 S Lowry St, Stillwater, OK 74074
 - HubSpot project `property-lead-automation` was created as part of property workflow automation work
 
 ## Open Questions
