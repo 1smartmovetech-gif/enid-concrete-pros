@@ -36,6 +36,13 @@
 ## 2026‑04‑06 (Monday)
 - Colten Vargas from Facebook sent the Stillwater deal at 217 S Lowry St, Stillwater, OK 74074.
 
+## 2026‑04‑07 (Tuesday)
+- Nathan defined a detailed spec for a daily 7:00 AM Central market brief to post in Discord.
+- Required market brief scope now includes futures indexes (ES, NQ, YM, RTY), prior day/week/month highs and lows, overnight range, support/resistance, trend bias, gold, silver, oil, bitcoin, VIX futures, correlations, economic calendar alerts, options positioning with SpotGamma-style interpretation, bearish equity put watchlist with trigger levels, low-float/OTC catalyst watchlist, and a commodities premium-selling section focused on softs.
+- Nathan's trading preferences now include commodities premium selling via far OTM options, 30-90 DTE, usually closing around 80%-90% premium decay, with emphasis on technicals + fundamentals and volatility catalysts in softs.
+- Supporting files created: `daily_market_brief_master_spec.md` and `daily_market_brief_product_plan.md`.
+- Automation remains blocked by gateway pairing / cron issue.
+
 ## Durable Themes
 - Communication platform preference is shifting toward Discord for better topic organization.
 - Nathan values persistent memory, searchable history, and structured project notes over chat-only context.
