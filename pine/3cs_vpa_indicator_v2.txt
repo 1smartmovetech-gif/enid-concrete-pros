@@ -1,0 +1,285 @@
+//@version=6
+indicator("3Cs + VPA Levels v2", overlay=true, max_lines_count=500, max_boxes_count=500, max_labels_count=500)
+
+// =========================
+// Inputs
+// =========================
+showPivots        = input.bool(true,  "Show Classic Pivot Levels")
+showDailyLevels   = input.bool(true,  "Show Previous Day High/Low")
+showWeeklyLevels  = input.bool(true,  "Show Previous Week High/Low")
+showMonthlyLevels = input.bool(true,  "Show Previous Month High/Low")
+showSignals       = input.bool(true,  "Show 3C Signals")
+showZoneFill      = input.bool(true,  "Show Active ATR Zone")
+showTradeHints    = input.bool(true,  "Show Stop / Target Hints")
+showDebug         = input.bool(false, "Show Debug")
+
+atrLen            = input.int(14, "ATR Length", minval=1)
+zoneAtrMult       = input.float(0.25, "Zone Width ATR Multiplier", minval=0.01, step=0.01)
+nearAtrMult       = input.float(0.20, "Near Level Distance (ATR)", minval=0.01, step=0.01)
+
+volLen            = input.int(20, "Volume SMA Length", minval=1)
+volSpikeMult      = input.float(1.75, "Volume Spike Multiplier", minval=0.10, step=0.05)
+wickToBodyMult    = input.float(1.20, "Wick/Body Threshold", minval=0.10, step=0.10)
+closeMode         = input.string("Prior High/Low", "Close Confirmation Mode", options=["Prior High/Low", "Prior Close"])
+
+useSessionFilter  = input.bool(true, "Block First Minutes Of RTH")
+rthSession        = input.session("0930-1600", "RTH Session")
+blockMinutes      = input.int(15, "Minutes To Block After RTH Open", minval=0, maxval=120)
+
+longColor         = input.color(color.lime, "Long Signal Color")
+shortColor        = input.color(color.red, "Short Signal Color")
+lineColor         = input.color(color.new(color.gray, 55), "Level Color")
+supportZoneColor  = input.color(color.new(color.green, 82), "Support Zone Color")
+resistZoneColor   = input.color(color.new(color.red, 82), "Resistance Zone Color")
+
+// =========================
+// Core calculations
+// =========================
+atr = ta.atr(atrLen)
+nearDist = atr * nearAtrMult
+zoneHalfWidth = atr * zoneAtrMult
+
+body = math.abs(close - open)
+upperWick = high - math.max(open, close)
+lowerWick = math.min(open, close) - low
+volMA = ta.sma(volume, volLen)
+volSpike = volume > volMA * volSpikeMult
+
+bullishRejection = (lowerWick > math.max(body, syminfo.mintick) * wickToBodyMult and close > open) or (close > open and close >= low + (high - low) * 0.65)
+bearishRejection = (upperWick > math.max(body, syminfo.mintick) * wickToBodyMult and close < open) or (close < open and close <= low + (high - low) * 0.35)
+
+bullCloseConfirm = closeMode == "Prior High/Low" ? close > high[1] : close > close[1]
+bearCloseConfirm = closeMode == "Prior High/Low" ? close < low[1] : close < close[1]
+
+inRth = not na(time(timeframe.period, rthSession))
+rthStart = inRth and not inRth[1]
+minsFromOpen = ta.barssince(rthStart) * timeframe.multiplier
+openingBlocked = useSessionFilter and inRth and minsFromOpen >= 0 and minsFromOpen < blockMinutes
+
+// =========================
+// HTF levels
+// =========================
+pdHigh = request.security(syminfo.tickerid, "D", high[1],  barmerge.gaps_off, barmerge.lookahead_off)
+pdLow  = request.security(syminfo.tickerid, "D", low[1],   barmerge.gaps_off, barmerge.lookahead_off)
+pdClose= request.security(syminfo.tickerid, "D", close[1], barmerge.gaps_off, barmerge.lookahead_off)
+
+pwHigh = request.security(syminfo.tickerid, "W", high[1], barmerge.gaps_off, barmerge.lookahead_off)
+pwLow  = request.security(syminfo.tickerid, "W", low[1],  barmerge.gaps_off, barmerge.lookahead_off)
+
+pmHigh = request.security(syminfo.tickerid, "M", high[1], barmerge.gaps_off, barmerge.lookahead_off)
+pmLow  = request.security(syminfo.tickerid, "M", low[1],  barmerge.gaps_off, barmerge.lookahead_off)
+
+pivot = (pdHigh + pdLow + pdClose) / 3.0
+r1 = 2.0 * pivot - pdLow
+s1 = 2.0 * pivot - pdHigh
+r2 = pivot + (pdHigh - pdLow)
+s2 = pivot - (pdHigh - pdLow)
+r3 = pdHigh + 2.0 * (pivot - pdLow)
+s3 = pdLow - 2.0 * (pdHigh - pivot)
+r4 = r3 + (r2 - r1)
+s4 = s3 - (s1 - s2)
+r5 = r4 + (r2 - r1)
+s5 = s4 - (s1 - s2)
+r6 = r5 + (r2 - r1)
+s6 = s5 - (s1 - s2)
+r7 = r6 + (r2 - r1)
+s7 = s6 - (s1 - s2)
+
+// =========================
+// Plots must stay in global scope
+// =========================
+plot(showPivots ? pivot : na, title="Pivot", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? r1 : na, title="R1", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? r2 : na, title="R2", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? r3 : na, title="R3", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? r4 : na, title="R4", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? r5 : na, title="R5", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? r6 : na, title="R6", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? r7 : na, title="R7", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? s1 : na, title="S1", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? s2 : na, title="S2", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? s3 : na, title="S3", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? s4 : na, title="S4", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? s5 : na, title="S5", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? s6 : na, title="S6", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? s7 : na, title="S7", color=lineColor, linewidth=1, style=plot.style_linebr)
+
+plot(showDailyLevels ? pdHigh : na, title="PDH", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showDailyLevels ? pdLow : na, title="PDL", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showWeeklyLevels ? pwHigh : na, title="PWH", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showWeeklyLevels ? pwLow : na, title="PWL", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showMonthlyLevels ? pmHigh : na, title="PMH", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showMonthlyLevels ? pmLow : na, title="PML", color=lineColor, linewidth=1, style=plot.style_linebr)
+
+// =========================
+// Nearest level logic inline (Pine-safe)
+// =========================
+float nearestLevel = na
+string nearestName = ""
+float nearestDist = 10000000000.0
+
+if showPivots
+    if math.abs(close - pivot) < nearestDist
+        nearestDist := math.abs(close - pivot)
+        nearestLevel := pivot
+        nearestName := "Pivot"
+    if math.abs(close - r1) < nearestDist
+        nearestDist := math.abs(close - r1)
+        nearestLevel := r1
+        nearestName := "R1"
+    if math.abs(close - r2) < nearestDist
+        nearestDist := math.abs(close - r2)
+        nearestLevel := r2
+        nearestName := "R2"
+    if math.abs(close - r3) < nearestDist
+        nearestDist := math.abs(close - r3)
+        nearestLevel := r3
+        nearestName := "R3"
+    if math.abs(close - r4) < nearestDist
+        nearestDist := math.abs(close - r4)
+        nearestLevel := r4
+        nearestName := "R4"
+    if math.abs(close - r5) < nearestDist
+        nearestDist := math.abs(close - r5)
+        nearestLevel := r5
+        nearestName := "R5"
+    if math.abs(close - r6) < nearestDist
+        nearestDist := math.abs(close - r6)
+        nearestLevel := r6
+        nearestName := "R6"
+    if math.abs(close - r7) < nearestDist
+        nearestDist := math.abs(close - r7)
+        nearestLevel := r7
+        nearestName := "R7"
+    if math.abs(close - s1) < nearestDist
+        nearestDist := math.abs(close - s1)
+        nearestLevel := s1
+        nearestName := "S1"
+    if math.abs(close - s2) < nearestDist
+        nearestDist := math.abs(close - s2)
+        nearestLevel := s2
+        nearestName := "S2"
+    if math.abs(close - s3) < nearestDist
+        nearestDist := math.abs(close - s3)
+        nearestLevel := s3
+        nearestName := "S3"
+    if math.abs(close - s4) < nearestDist
+        nearestDist := math.abs(close - s4)
+        nearestLevel := s4
+        nearestName := "S4"
+    if math.abs(close - s5) < nearestDist
+        nearestDist := math.abs(close - s5)
+        nearestLevel := s5
+        nearestName := "S5"
+    if math.abs(close - s6) < nearestDist
+        nearestDist := math.abs(close - s6)
+        nearestLevel := s6
+        nearestName := "S6"
+    if math.abs(close - s7) < nearestDist
+        nearestDist := math.abs(close - s7)
+        nearestLevel := s7
+        nearestName := "S7"
+
+if showDailyLevels
+    if math.abs(close - pdHigh) < nearestDist
+        nearestDist := math.abs(close - pdHigh)
+        nearestLevel := pdHigh
+        nearestName := "PDH"
+    if math.abs(close - pdLow) < nearestDist
+        nearestDist := math.abs(close - pdLow)
+        nearestLevel := pdLow
+        nearestName := "PDL"
+
+if showWeeklyLevels
+    if math.abs(close - pwHigh) < nearestDist
+        nearestDist := math.abs(close - pwHigh)
+        nearestLevel := pwHigh
+        nearestName := "PWH"
+    if math.abs(close - pwLow) < nearestDist
+        nearestDist := math.abs(close - pwLow)
+        nearestLevel := pwLow
+        nearestName := "PWL"
+
+if showMonthlyLevels
+    if math.abs(close - pmHigh) < nearestDist
+        nearestDist := math.abs(close - pmHigh)
+        nearestLevel := pmHigh
+        nearestName := "PMH"
+    if math.abs(close - pmLow) < nearestDist
+        nearestDist := math.abs(close - pmLow)
+        nearestLevel := pmLow
+        nearestName := "PML"
+
+nearAnyLevel = not na(nearestLevel) and nearestDist <= nearDist
+supportSide = not na(nearestLevel) and close >= nearestLevel
+resistanceSide = not na(nearestLevel) and close < nearestLevel
+majorLevel = nearestName == "PWH" or nearestName == "PWL" or nearestName == "PMH" or nearestName == "PML"
+
+// =========================
+// Simple touch/retest logic
+// =========================
+touchesLevel = nearAnyLevel and high >= nearestLevel - nearDist and low <= nearestLevel + nearDist
+freshTouch = touchesLevel and not touchesLevel[1]
+var int touchCount = 0
+if not nearAnyLevel
+    touchCount := 0
+else if freshTouch
+    touchCount += 1
+
+retestPenalty = touchCount >= 3
+retestBlocked = touchCount >= 5
+
+// =========================
+// 3C signals
+// =========================
+longAggressive = showSignals and nearAnyLevel and supportSide and volSpike and bullishRejection and not openingBlocked and not retestBlocked
+shortAggressive = showSignals and nearAnyLevel and resistanceSide and volSpike and bearishRejection and not openingBlocked and not retestBlocked
+
+longConfirmed = longAggressive and bullCloseConfirm
+shortConfirmed = shortAggressive and bearCloseConfirm
+
+continuationLong = showSignals and nearAnyLevel and resistanceSide and volSpike and not bearishRejection and bullCloseConfirm and not openingBlocked
+continuationShort = showSignals and nearAnyLevel and supportSide and volSpike and not bullishRejection and bearCloseConfirm and not openingBlocked
+
+scoreLong = (nearAnyLevel ? 1 : 0) + (volSpike ? 1 : 0) + (bullishRejection ? 1 : 0) + (bullCloseConfirm ? 1 : 0) + (majorLevel ? 1 : 0) - (retestPenalty ? 1 : 0)
+scoreShort = (nearAnyLevel ? 1 : 0) + (volSpike ? 1 : 0) + (bearishRejection ? 1 : 0) + (bearCloseConfirm ? 1 : 0) + (majorLevel ? 1 : 0) - (retestPenalty ? 1 : 0)
+
+// =========================
+// Zone + trade hints
+// =========================
+zoneTop = showZoneFill and nearAnyLevel ? nearestLevel + zoneHalfWidth : na
+zoneBot = showZoneFill and nearAnyLevel ? nearestLevel - zoneHalfWidth : na
+zoneColor = not na(nearestLevel) ? (close >= nearestLevel ? supportZoneColor : resistZoneColor) : na
+pZoneTop = plot(zoneTop, title="Active Zone Top", color=color.new(color.white, 100), display=display.none)
+pZoneBot = plot(zoneBot, title="Active Zone Bottom", color=color.new(color.white, 100), display=display.none)
+fill(pZoneTop, pZoneBot, color=zoneColor, title="Active ATR Zone")
+
+longStop = (longAggressive or longConfirmed) ? low - atr * 0.15 : na
+shortStop = (shortAggressive or shortConfirmed) ? high + atr * 0.15 : na
+longTarget = (longAggressive or longConfirmed) and not na(nearestLevel) ? nearestLevel + atr : na
+shortTarget = (shortAggressive or shortConfirmed) and not na(nearestLevel) ? nearestLevel - atr : na
+
+plot(showTradeHints ? longStop : na, title="Long Stop", color=color.new(shortColor, 20), linewidth=1, style=plot.style_linebr)
+plot(showTradeHints ? shortStop : na, title="Short Stop", color=color.new(longColor, 20), linewidth=1, style=plot.style_linebr)
+plot(showTradeHints ? longTarget : na, title="Long Target", color=color.new(longColor, 45), linewidth=1, style=plot.style_linebr)
+plot(showTradeHints ? shortTarget : na, title="Short Target", color=color.new(shortColor, 45), linewidth=1, style=plot.style_linebr)
+
+plotshape(longAggressive and not longConfirmed, title="Aggressive Long", style=shape.triangleup, location=location.belowbar, color=longColor, size=size.tiny, text="L-A")
+plotshape(shortAggressive and not shortConfirmed, title="Aggressive Short", style=shape.triangledown, location=location.abovebar, color=shortColor, size=size.tiny, text="S-A")
+plotshape(longConfirmed, title="Confirmed Long", style=shape.labelup, location=location.belowbar, color=longColor, textcolor=color.white, size=size.small, text="3C Long")
+plotshape(shortConfirmed, title="Confirmed Short", style=shape.labeldown, location=location.abovebar, color=shortColor, textcolor=color.white, size=size.small, text="3C Short")
+plotshape(continuationLong, title="Continuation Long", style=shape.circle, location=location.belowbar, color=color.aqua, size=size.tiny, text="Cont+")
+plotshape(continuationShort, title="Continuation Short", style=shape.circle, location=location.abovebar, color=color.orange, size=size.tiny, text="Cont-")
+
+if showDebug and barstate.islast
+    label.new(bar_index, high, "Nearest: " + nearestName + "\nDist: " + str.tostring(nearestDist) + "\nTouches: " + str.tostring(touchCount) + "\nVolSpike: " + str.tostring(volSpike) + "\nBullRej: " + str.tostring(bullishRejection) + "\nBearRej: " + str.tostring(bearishRejection) + "\nBullClose: " + str.tostring(bullCloseConfirm) + "\nBearClose: " + str.tostring(bearCloseConfirm) + "\nScoreL: " + str.tostring(scoreLong) + "\nScoreS: " + str.tostring(scoreShort), style=label.style_label_left, textcolor=color.white, color=color.new(color.black, 0))
+
+alertcondition(longConfirmed, title="3C Confirmed Long", message="3C Confirmed Long")
+alertcondition(shortConfirmed, title="3C Confirmed Short", message="3C Confirmed Short")
+alertcondition(continuationLong, title="3C Continuation Long", message="3C Continuation Long")
+alertcondition(continuationShort, title="3C Continuation Short", message="3C Continuation Short")
+
+// Notes:
+// - This v2 removes helper-function patterns Pine dislikes.
+// - Multi-timeframe 1m/2m/3m confirmation can be added after compile validation.
+// - Retest logic is intentionally simple in this version.
