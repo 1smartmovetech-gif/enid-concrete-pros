@@ -1,0 +1,437 @@
+//@version=6
+indicator("3Cs + VPA Levels v4", overlay=true, max_lines_count=500, max_boxes_count=500, max_labels_count=500)
+
+showPivots        = input.bool(true,  "Show Classic Pivot Levels")
+showDailyLevels   = input.bool(true,  "Show Previous Day High/Low")
+showWeeklyLevels  = input.bool(true,  "Show Previous Week High/Low")
+showMonthlyLevels = input.bool(true,  "Show Previous Month High/Low")
+showHTFLevels     = input.bool(true,  "Show HTF SR Levels (1H/2H/4H)")
+showDailySMAs     = input.bool(true,  "Show Daily SMA 20/50/100/200")
+showZoneFill      = input.bool(true,  "Show Active ATR Zone")
+showSignals       = input.bool(true,  "Show Entry Signals")
+showHints         = input.bool(true,  "Show Stop / Target Hints")
+showDebug         = input.bool(false, "Show Debug Label")
+
+atrLen            = input.int(14, "ATR Length", minval=1)
+nearAtrMult       = input.float(0.20, "Near Level Distance (ATR)", minval=0.01, step=0.01)
+zoneAtrMult       = input.float(0.25, "Zone Width ATR Multiplier", minval=0.01, step=0.01)
+volMinRatio       = input.float(1.10, "Min Volume Ratio Vs Previous Bar", minval=1.0, step=0.01)
+wickMinPct        = input.float(0.35, "Min Wick % Of Candle Range", minval=0.05, maxval=0.95, step=0.01)
+confirmMode       = input.string("Close Beyond Prior 5m High/Low", "5m Confirmation Mode", options=["Close Beyond Prior 5m High/Low", "Close Beyond Prior 5m Body"])
+useSessionFilter  = input.bool(true, "Block First Minutes Of RTH")
+rthSession        = input.session("0930-1600", "RTH Session")
+blockMinutes      = input.int(15, "Minutes To Block After RTH Open", minval=0, maxval=120)
+
+longColor         = input.color(color.lime, "Long Signal Color")
+shortColor        = input.color(color.red, "Short Signal Color")
+lineColor         = input.color(color.new(color.gray, 55), "Base Level Color")
+htfLineColor      = input.color(color.new(color.blue, 55), "HTF Level Color")
+smaColor          = input.color(color.new(color.yellow, 35), "Daily SMA Color")
+supportZoneColor  = input.color(color.new(color.green, 82), "Support Zone Color")
+resistZoneColor   = input.color(color.new(color.red, 82), "Resistance Zone Color")
+
+atr = ta.atr(atrLen)
+nearDist = atr * nearAtrMult
+zoneHalfWidth = atr * zoneAtrMult
+
+barRange = math.max(high - low, syminfo.mintick)
+body = math.abs(close - open)
+upperWick = high - math.max(open, close)
+lowerWick = math.min(open, close) - low
+upperWickPct = upperWick / barRange
+lowerWickPct = lowerWick / barRange
+
+inRth = not na(time(timeframe.period, rthSession))
+rthStart = inRth and not inRth[1]
+minsFromOpen = ta.barssince(rthStart) * timeframe.multiplier
+openingBlocked = useSessionFilter and inRth and minsFromOpen >= 0 and minsFromOpen < blockMinutes
+
+pdHigh = request.security(syminfo.tickerid, "D", high[1],  barmerge.gaps_off, barmerge.lookahead_off)
+pdLow  = request.security(syminfo.tickerid, "D", low[1],   barmerge.gaps_off, barmerge.lookahead_off)
+pdClose= request.security(syminfo.tickerid, "D", close[1], barmerge.gaps_off, barmerge.lookahead_off)
+pwHigh = request.security(syminfo.tickerid, "W", high[1], barmerge.gaps_off, barmerge.lookahead_off)
+pwLow  = request.security(syminfo.tickerid, "W", low[1],  barmerge.gaps_off, barmerge.lookahead_off)
+pmHigh = request.security(syminfo.tickerid, "M", high[1], barmerge.gaps_off, barmerge.lookahead_off)
+pmLow  = request.security(syminfo.tickerid, "M", low[1],  barmerge.gaps_off, barmerge.lookahead_off)
+
+h1High = request.security(syminfo.tickerid, "60", high[1], barmerge.gaps_off, barmerge.lookahead_off)
+h1Low  = request.security(syminfo.tickerid, "60", low[1],  barmerge.gaps_off, barmerge.lookahead_off)
+h2High = request.security(syminfo.tickerid, "120", high[1], barmerge.gaps_off, barmerge.lookahead_off)
+h2Low  = request.security(syminfo.tickerid, "120", low[1],  barmerge.gaps_off, barmerge.lookahead_off)
+h4High = request.security(syminfo.tickerid, "240", high[1], barmerge.gaps_off, barmerge.lookahead_off)
+h4Low  = request.security(syminfo.tickerid, "240", low[1],  barmerge.gaps_off, barmerge.lookahead_off)
+
+sma20D  = request.security(syminfo.tickerid, "D", ta.sma(close, 20),  barmerge.gaps_off, barmerge.lookahead_off)
+sma50D  = request.security(syminfo.tickerid, "D", ta.sma(close, 50),  barmerge.gaps_off, barmerge.lookahead_off)
+sma100D = request.security(syminfo.tickerid, "D", ta.sma(close, 100), barmerge.gaps_off, barmerge.lookahead_off)
+sma200D = request.security(syminfo.tickerid, "D", ta.sma(close, 200), barmerge.gaps_off, barmerge.lookahead_off)
+
+pivot = (pdHigh + pdLow + pdClose) / 3.0
+r1 = 2.0 * pivot - pdLow
+s1 = 2.0 * pivot - pdHigh
+r2 = pivot + (pdHigh - pdLow)
+s2 = pivot - (pdHigh - pdLow)
+r3 = pdHigh + 2.0 * (pivot - pdLow)
+s3 = pdLow - 2.0 * (pdHigh - pivot)
+r4 = r3 + (r2 - r1)
+s4 = s3 - (s1 - s2)
+r5 = r4 + (r2 - r1)
+s5 = s4 - (s1 - s2)
+r6 = r5 + (r2 - r1)
+s6 = s5 - (s1 - s2)
+r7 = r6 + (r2 - r1)
+s7 = s6 - (s1 - s2)
+
+plot(showPivots ? pivot : na, title="Pivot", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? r1 : na, title="R1", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? r2 : na, title="R2", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? r3 : na, title="R3", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? r4 : na, title="R4", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? r5 : na, title="R5", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? r6 : na, title="R6", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? r7 : na, title="R7", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? s1 : na, title="S1", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? s2 : na, title="S2", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? s3 : na, title="S3", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? s4 : na, title="S4", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? s5 : na, title="S5", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? s6 : na, title="S6", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showPivots ? s7 : na, title="S7", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showDailyLevels ? pdHigh : na, title="PDH", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showDailyLevels ? pdLow : na, title="PDL", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showWeeklyLevels ? pwHigh : na, title="PWH", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showWeeklyLevels ? pwLow : na, title="PWL", color=lineColor, linewidth=1, style=plot.style_linebr)
+plot(showMonthlyLevels ? pmHigh : na, title="PMH", color=lineColor, linewidth=2, style=plot.style_linebr)
+plot(showMonthlyLevels ? pmLow : na, title="PML", color=lineColor, linewidth=2, style=plot.style_linebr)
+plot(showHTFLevels ? h1High : na, title="1H Prev High", color=htfLineColor, linewidth=1, style=plot.style_linebr)
+plot(showHTFLevels ? h1Low : na, title="1H Prev Low", color=htfLineColor, linewidth=1, style=plot.style_linebr)
+plot(showHTFLevels ? h2High : na, title="2H Prev High", color=htfLineColor, linewidth=1, style=plot.style_linebr)
+plot(showHTFLevels ? h2Low : na, title="2H Prev Low", color=htfLineColor, linewidth=1, style=plot.style_linebr)
+plot(showHTFLevels ? h4High : na, title="4H Prev High", color=htfLineColor, linewidth=1, style=plot.style_linebr)
+plot(showHTFLevels ? h4Low : na, title="4H Prev Low", color=htfLineColor, linewidth=1, style=plot.style_linebr)
+plot(showDailySMAs ? sma20D : na, title="Daily SMA 20", color=smaColor, linewidth=1, style=plot.style_linebr)
+plot(showDailySMAs ? sma50D : na, title="Daily SMA 50", color=smaColor, linewidth=1, style=plot.style_linebr)
+plot(showDailySMAs ? sma100D : na, title="Daily SMA 100", color=smaColor, linewidth=1, style=plot.style_linebr)
+plot(showDailySMAs ? sma200D : na, title="Daily SMA 200", color=smaColor, linewidth=2, style=plot.style_linebr)
+
+float nearestLevel = na
+string nearestName = ""
+float nearestDist = 10000000000.0
+float nearestWeight = 0.0
+bool nearestIsSMA = false
+
+if showPivots
+    if math.abs(close - pivot) < nearestDist
+        nearestDist := math.abs(close - pivot)
+        nearestLevel := pivot
+        nearestName := "Pivot"
+        nearestWeight := 1.5
+        nearestIsSMA := false
+    if math.abs(close - r1) < nearestDist
+        nearestDist := math.abs(close - r1)
+        nearestLevel := r1
+        nearestName := "R1"
+        nearestWeight := 1.0
+        nearestIsSMA := false
+    if math.abs(close - r2) < nearestDist
+        nearestDist := math.abs(close - r2)
+        nearestLevel := r2
+        nearestName := "R2"
+        nearestWeight := 1.2
+        nearestIsSMA := false
+    if math.abs(close - r3) < nearestDist
+        nearestDist := math.abs(close - r3)
+        nearestLevel := r3
+        nearestName := "R3"
+        nearestWeight := 1.4
+        nearestIsSMA := false
+    if math.abs(close - r4) < nearestDist
+        nearestDist := math.abs(close - r4)
+        nearestLevel := r4
+        nearestName := "R4"
+        nearestWeight := 1.6
+        nearestIsSMA := false
+    if math.abs(close - r5) < nearestDist
+        nearestDist := math.abs(close - r5)
+        nearestLevel := r5
+        nearestName := "R5"
+        nearestWeight := 1.8
+        nearestIsSMA := false
+    if math.abs(close - r6) < nearestDist
+        nearestDist := math.abs(close - r6)
+        nearestLevel := r6
+        nearestName := "R6"
+        nearestWeight := 2.0
+        nearestIsSMA := false
+    if math.abs(close - r7) < nearestDist
+        nearestDist := math.abs(close - r7)
+        nearestLevel := r7
+        nearestName := "R7"
+        nearestWeight := 2.2
+        nearestIsSMA := false
+    if math.abs(close - s1) < nearestDist
+        nearestDist := math.abs(close - s1)
+        nearestLevel := s1
+        nearestName := "S1"
+        nearestWeight := 1.0
+        nearestIsSMA := false
+    if math.abs(close - s2) < nearestDist
+        nearestDist := math.abs(close - s2)
+        nearestLevel := s2
+        nearestName := "S2"
+        nearestWeight := 1.2
+        nearestIsSMA := false
+    if math.abs(close - s3) < nearestDist
+        nearestDist := math.abs(close - s3)
+        nearestLevel := s3
+        nearestName := "S3"
+        nearestWeight := 1.4
+        nearestIsSMA := false
+    if math.abs(close - s4) < nearestDist
+        nearestDist := math.abs(close - s4)
+        nearestLevel := s4
+        nearestName := "S4"
+        nearestWeight := 1.6
+        nearestIsSMA := false
+    if math.abs(close - s5) < nearestDist
+        nearestDist := math.abs(close - s5)
+        nearestLevel := s5
+        nearestName := "S5"
+        nearestWeight := 1.8
+        nearestIsSMA := false
+    if math.abs(close - s6) < nearestDist
+        nearestDist := math.abs(close - s6)
+        nearestLevel := s6
+        nearestName := "S6"
+        nearestWeight := 2.0
+        nearestIsSMA := false
+    if math.abs(close - s7) < nearestDist
+        nearestDist := math.abs(close - s7)
+        nearestLevel := s7
+        nearestName := "S7"
+        nearestWeight := 2.2
+        nearestIsSMA := false
+
+if showDailyLevels
+    if math.abs(close - pdHigh) < nearestDist
+        nearestDist := math.abs(close - pdHigh)
+        nearestLevel := pdHigh
+        nearestName := "PDH"
+        nearestWeight := 2.5
+        nearestIsSMA := false
+    if math.abs(close - pdLow) < nearestDist
+        nearestDist := math.abs(close - pdLow)
+        nearestLevel := pdLow
+        nearestName := "PDL"
+        nearestWeight := 2.5
+        nearestIsSMA := false
+
+if showWeeklyLevels
+    if math.abs(close - pwHigh) < nearestDist
+        nearestDist := math.abs(close - pwHigh)
+        nearestLevel := pwHigh
+        nearestName := "PWH"
+        nearestWeight := 4.0
+        nearestIsSMA := false
+    if math.abs(close - pwLow) < nearestDist
+        nearestDist := math.abs(close - pwLow)
+        nearestLevel := pwLow
+        nearestName := "PWL"
+        nearestWeight := 4.0
+        nearestIsSMA := false
+
+if showMonthlyLevels
+    if math.abs(close - pmHigh) < nearestDist
+        nearestDist := math.abs(close - pmHigh)
+        nearestLevel := pmHigh
+        nearestName := "PMH"
+        nearestWeight := 5.5
+        nearestIsSMA := false
+    if math.abs(close - pmLow) < nearestDist
+        nearestDist := math.abs(close - pmLow)
+        nearestLevel := pmLow
+        nearestName := "PML"
+        nearestWeight := 5.5
+        nearestIsSMA := false
+
+if showHTFLevels
+    if math.abs(close - h1High) < nearestDist
+        nearestDist := math.abs(close - h1High)
+        nearestLevel := h1High
+        nearestName := "1H High"
+        nearestWeight := 1.0
+        nearestIsSMA := false
+    if math.abs(close - h1Low) < nearestDist
+        nearestDist := math.abs(close - h1Low)
+        nearestLevel := h1Low
+        nearestName := "1H Low"
+        nearestWeight := 1.0
+        nearestIsSMA := false
+    if math.abs(close - h2High) < nearestDist
+        nearestDist := math.abs(close - h2High)
+        nearestLevel := h2High
+        nearestName := "2H High"
+        nearestWeight := 2.0
+        nearestIsSMA := false
+    if math.abs(close - h2Low) < nearestDist
+        nearestDist := math.abs(close - h2Low)
+        nearestLevel := h2Low
+        nearestName := "2H Low"
+        nearestWeight := 2.0
+        nearestIsSMA := false
+    if math.abs(close - h4High) < nearestDist
+        nearestDist := math.abs(close - h4High)
+        nearestLevel := h4High
+        nearestName := "4H High"
+        nearestWeight := 3.0
+        nearestIsSMA := false
+    if math.abs(close - h4Low) < nearestDist
+        nearestDist := math.abs(close - h4Low)
+        nearestLevel := h4Low
+        nearestName := "4H Low"
+        nearestWeight := 3.0
+        nearestIsSMA := false
+
+if showDailySMAs
+    if math.abs(close - sma20D) < nearestDist
+        nearestDist := math.abs(close - sma20D)
+        nearestLevel := sma20D
+        nearestName := "D SMA20"
+        nearestWeight := 0.5
+        nearestIsSMA := true
+    if math.abs(close - sma50D) < nearestDist
+        nearestDist := math.abs(close - sma50D)
+        nearestLevel := sma50D
+        nearestName := "D SMA50"
+        nearestWeight := 0.75
+        nearestIsSMA := true
+    if math.abs(close - sma100D) < nearestDist
+        nearestDist := math.abs(close - sma100D)
+        nearestLevel := sma100D
+        nearestName := "D SMA100"
+        nearestWeight := 1.0
+        nearestIsSMA := true
+    if math.abs(close - sma200D) < nearestDist
+        nearestDist := math.abs(close - sma200D)
+        nearestLevel := sma200D
+        nearestName := "D SMA200"
+        nearestWeight := 1.25
+        nearestIsSMA := true
+
+nearAnyLevel = not na(nearestLevel) and nearestDist <= nearDist
+supportSide = not na(nearestLevel) and close >= nearestLevel
+resistanceSide = not na(nearestLevel) and close < nearestLevel
+
+nearPD = math.abs(close - pdHigh) <= nearDist or math.abs(close - pdLow) <= nearDist
+nearPW = math.abs(close - pwHigh) <= nearDist or math.abs(close - pwLow) <= nearDist
+nearPM = math.abs(close - pmHigh) <= nearDist or math.abs(close - pmLow) <= nearDist
+nearH1 = math.abs(close - h1High) <= nearDist or math.abs(close - h1Low) <= nearDist
+nearH2 = math.abs(close - h2High) <= nearDist or math.abs(close - h2Low) <= nearDist
+nearH4 = math.abs(close - h4High) <= nearDist or math.abs(close - h4Low) <= nearDist
+nearSMA20 = math.abs(close - sma20D) <= nearDist
+nearSMA50 = math.abs(close - sma50D) <= nearDist
+nearSMA100 = math.abs(close - sma100D) <= nearDist
+nearSMA200 = math.abs(close - sma200D) <= nearDist
+
+srConfluenceCount = (nearPD ? 1 : 0) + (nearPW ? 1 : 0) + (nearPM ? 1 : 0) + (nearH1 ? 1 : 0) + (nearH2 ? 1 : 0) + (nearH4 ? 1 : 0)
+smaConfluenceCount = (nearSMA20 ? 1 : 0) + (nearSMA50 ? 1 : 0) + (nearSMA100 ? 1 : 0) + (nearSMA200 ? 1 : 0)
+smaBonus = smaConfluenceCount > 0 and srConfluenceCount > 0 ? 1.0 + (smaConfluenceCount - 1) * 0.25 : smaConfluenceCount > 0 ? 0.25 : 0.0
+
+volRatio1 = request.security(syminfo.tickerid, "1", volume[1] > 0 ? volume / volume[1] : 0.0, barmerge.gaps_off, barmerge.lookahead_off)
+lowerWickPct1 = request.security(syminfo.tickerid, "1", (math.min(open, close) - low) / math.max(high - low, syminfo.mintick), barmerge.gaps_off, barmerge.lookahead_off)
+upperWickPct1 = request.security(syminfo.tickerid, "1", (high - math.max(open, close)) / math.max(high - low, syminfo.mintick), barmerge.gaps_off, barmerge.lookahead_off)
+close1 = request.security(syminfo.tickerid, "1", close, barmerge.gaps_off, barmerge.lookahead_off)
+open1 = request.security(syminfo.tickerid, "1", open, barmerge.gaps_off, barmerge.lookahead_off)
+
+volRatio2 = request.security(syminfo.tickerid, "2", volume[1] > 0 ? volume / volume[1] : 0.0, barmerge.gaps_off, barmerge.lookahead_off)
+lowerWickPct2 = request.security(syminfo.tickerid, "2", (math.min(open, close) - low) / math.max(high - low, syminfo.mintick), barmerge.gaps_off, barmerge.lookahead_off)
+upperWickPct2 = request.security(syminfo.tickerid, "2", (high - math.max(open, close)) / math.max(high - low, syminfo.mintick), barmerge.gaps_off, barmerge.lookahead_off)
+close2 = request.security(syminfo.tickerid, "2", close, barmerge.gaps_off, barmerge.lookahead_off)
+open2 = request.security(syminfo.tickerid, "2", open, barmerge.gaps_off, barmerge.lookahead_off)
+
+bullSpike1 = volRatio1 >= volMinRatio and lowerWickPct1 >= wickMinPct and close1 > open1
+bearSpike1 = volRatio1 >= volMinRatio and upperWickPct1 >= wickMinPct and close1 < open1
+bullSpike2 = volRatio2 >= volMinRatio and lowerWickPct2 >= wickMinPct and close2 > open2
+bearSpike2 = volRatio2 >= volMinRatio and upperWickPct2 >= wickMinPct and close2 < open2
+
+bullSpike = bullSpike1 or bullSpike2
+bearSpike = bearSpike1 or bearSpike2
+bestBullVolRatio = math.max(bullSpike1 ? volRatio1 : 0.0, bullSpike2 ? volRatio2 : 0.0)
+bestBearVolRatio = math.max(bearSpike1 ? volRatio1 : 0.0, bearSpike2 ? volRatio2 : 0.0)
+bestBullWickPct = math.max(bullSpike1 ? lowerWickPct1 : 0.0, bullSpike2 ? lowerWickPct2 : 0.0)
+bestBearWickPct = math.max(bearSpike1 ? upperWickPct1 : 0.0, bearSpike2 ? upperWickPct2 : 0.0)
+
+open5 = request.security(syminfo.tickerid, "5", open, barmerge.gaps_off, barmerge.lookahead_off)
+close5 = request.security(syminfo.tickerid, "5", close, barmerge.gaps_off, barmerge.lookahead_off)
+high5 = request.security(syminfo.tickerid, "5", high, barmerge.gaps_off, barmerge.lookahead_off)
+low5 = request.security(syminfo.tickerid, "5", low, barmerge.gaps_off, barmerge.lookahead_off)
+open5Prev = request.security(syminfo.tickerid, "5", open[1], barmerge.gaps_off, barmerge.lookahead_off)
+close5Prev = request.security(syminfo.tickerid, "5", close[1], barmerge.gaps_off, barmerge.lookahead_off)
+high5Prev = request.security(syminfo.tickerid, "5", high[1], barmerge.gaps_off, barmerge.lookahead_off)
+low5Prev = request.security(syminfo.tickerid, "5", low[1], barmerge.gaps_off, barmerge.lookahead_off)
+
+bull5 = close5 > open5
+bear5 = close5 < open5
+bull5Confirm = confirmMode == "Close Beyond Prior 5m High/Low" ? (bull5 and close5 > high5Prev) : (bull5 and close5 > math.max(open5Prev, close5Prev))
+bear5Confirm = confirmMode == "Close Beyond Prior 5m High/Low" ? (bear5 and close5 < low5Prev) : (bear5 and close5 < math.min(open5Prev, close5Prev))
+bull5Engulf = bull5 and open5 <= close5Prev and close5 >= open5Prev
+bear5Engulf = bear5 and open5 >= close5Prev and close5 <= open5Prev
+
+touchesLevel = nearAnyLevel and high >= nearestLevel - nearDist and low <= nearestLevel + nearDist
+freshTouch = touchesLevel and not touchesLevel[1]
+var int touchCount = 0
+if not nearAnyLevel
+    touchCount := 0
+else if freshTouch
+    touchCount += 1
+
+retestPenalty = touchCount >= 3 ? 1.0 : 0.0
+retestBlocked = touchCount >= 5
+
+longValid = showSignals and nearAnyLevel and supportSide and bullSpike and bull5Confirm and not openingBlocked and not retestBlocked
+shortValid = showSignals and nearAnyLevel and resistanceSide and bearSpike and bear5Confirm and not openingBlocked and not retestBlocked
+
+volScoreLong = bullSpike ? math.min((bestBullVolRatio - 1.0) * 10.0, 4.0) : 0.0
+volScoreShort = bearSpike ? math.min((bestBearVolRatio - 1.0) * 10.0, 4.0) : 0.0
+wickScoreLong = bullSpike ? math.min((bestBullWickPct - wickMinPct) * 10.0 + 1.0, 3.0) : 0.0
+wickScoreShort = bearSpike ? math.min((bestBearWickPct - wickMinPct) * 10.0 + 1.0, 3.0) : 0.0
+confirmScoreLong = bull5Confirm ? (bull5Engulf ? 3.0 : 2.0) : 0.0
+confirmScoreShort = bear5Confirm ? (bear5Engulf ? 3.0 : 2.0) : 0.0
+locationScore = nearAnyLevel ? nearestWeight : 0.0
+confluenceScore = srConfluenceCount > 1 ? (srConfluenceCount - 1) * 0.75 : 0.0
+confidenceLong = volScoreLong + wickScoreLong + confirmScoreLong + locationScore + confluenceScore + smaBonus - retestPenalty
+confidenceShort = volScoreShort + wickScoreShort + confirmScoreShort + locationScore + confluenceScore + smaBonus - retestPenalty
+
+longHighConf = longValid and confidenceLong >= 10
+longMedConf = longValid and confidenceLong >= 7 and confidenceLong < 10
+shortHighConf = shortValid and confidenceShort >= 10
+shortMedConf = shortValid and confidenceShort >= 7 and confidenceShort < 10
+
+zoneTop = showZoneFill and nearAnyLevel ? nearestLevel + zoneHalfWidth : na
+zoneBot = showZoneFill and nearAnyLevel ? nearestLevel - zoneHalfWidth : na
+zoneColor = not na(nearestLevel) ? (close >= nearestLevel ? supportZoneColor : resistZoneColor) : na
+pZoneTop = plot(zoneTop, title="Active Zone Top", color=color.new(color.white, 100), display=display.none)
+pZoneBot = plot(zoneBot, title="Active Zone Bottom", color=color.new(color.white, 100), display=display.none)
+fill(pZoneTop, pZoneBot, color=zoneColor, title="Active ATR Zone")
+
+plotshape(longMedConf, title="Long Medium Confidence", style=shape.triangleup, location=location.belowbar, color=longColor, size=size.small, text="Long")
+plotshape(longHighConf, title="Long High Confidence", style=shape.labelup, location=location.belowbar, color=longColor, textcolor=color.white, size=size.small, text="Long+")
+plotshape(shortMedConf, title="Short Medium Confidence", style=shape.triangledown, location=location.abovebar, color=shortColor, size=size.small, text="Short")
+plotshape(shortHighConf, title="Short High Confidence", style=shape.labeldown, location=location.abovebar, color=shortColor, textcolor=color.white, size=size.small, text="Short+")
+
+longStop = showHints and longValid ? low - atr * 0.15 : na
+shortStop = showHints and shortValid ? high + atr * 0.15 : na
+longTarget = showHints and longValid and not na(nearestLevel) ? nearestLevel + atr : na
+shortTarget = showHints and shortValid and not na(nearestLevel) ? nearestLevel - atr : na
+plot(longStop, title="Long Stop", color=color.new(shortColor, 15), linewidth=1, style=plot.style_linebr)
+plot(shortStop, title="Short Stop", color=color.new(longColor, 15), linewidth=1, style=plot.style_linebr)
+plot(longTarget, title="Long Target", color=color.new(longColor, 45), linewidth=1, style=plot.style_linebr)
+plot(shortTarget, title="Short Target", color=color.new(shortColor, 45), linewidth=1, style=plot.style_linebr)
+
+if showDebug and barstate.islast
+    label.new(bar_index, high, "Nearest: " + nearestName + "\nWeight: " + str.tostring(nearestWeight) + "\nNearDist: " + str.tostring(nearestDist) + "\nSR Confluence: " + str.tostring(srConfluenceCount) + "\nSMA Confluence: " + str.tostring(smaConfluenceCount) + "\nTouches: " + str.tostring(touchCount) + "\nBull VolRatio: " + str.tostring(bestBullVolRatio) + "\nBear VolRatio: " + str.tostring(bestBearVolRatio) + "\nBull Wick%: " + str.tostring(bestBullWickPct) + "\nBear Wick%: " + str.tostring(bestBearWickPct) + "\nBull5Confirm: " + str.tostring(bull5Confirm) + "\nBear5Confirm: " + str.tostring(bear5Confirm) + "\nConf L: " + str.tostring(confidenceLong) + "\nConf S: " + str.tostring(confidenceShort), style=label.style_label_left, textcolor=color.white, color=color.new(color.black, 0))
+
+alertcondition(longValid, title="3Cs VPA Long", message="3Cs VPA Long")
+alertcondition(shortValid, title="3Cs VPA Short", message="3Cs VPA Short")
+alertcondition(longHighConf, title="3Cs VPA Long High Confidence", message="3Cs VPA Long High Confidence")
+alertcondition(shortHighConf, title="3Cs VPA Short High Confidence", message="3Cs VPA Short High Confidence")
