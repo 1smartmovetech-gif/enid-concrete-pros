@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rural Haven | Property OS</title>
+  <meta name="description" content="Straightforward property solutions for rural and small-market owners." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <div class="brand">Rural Haven</div>
+      <nav>
+        <a href="#sell">Sell</a>
+        <a href="#properties">Properties</a>
+        <a href="#investors">Investors</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">Property OS + public site</p>
+          <h1>Straightforward property solutions for rural and small-market owners.</h1>
+          <p class="lead">Capture seller leads, organize deals, track follow-up, and present opportunities through one simple operating system.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#sell">Sell Your Property</a>
+            <a class="btn btn-secondary" href="#properties">View Opportunities</a>
+          </div>
+        </div>
+        <div class="panel">
+          <h2>What this MVP includes</h2>
+          <ul>
+            <li>Seller intake form</li>
+            <li>Investor / buyer intake form</li>
+            <li>Available properties page shell</li>
+            <li>Contact capture</li>
+            <li>Airtable-ready structure</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container cards">
+        <article class="card">
+          <h3>Direct seller leads</h3>
+          <p>Simple intake that can route into Airtable and kick off your follow-up workflow.</p>
+        </article>
+        <article class="card">
+          <h3>Canonical property records</h3>
+          <p>One property, one record, one next action. No more scattered context.</p>
+        </article>
+        <article class="card">
+          <h3>Buyer list growth</h3>
+          <p>Collect investor criteria and build a usable list for dispo and future deals.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="sell" class="section alt">
+      <div class="container two-col">
+        <div>
+          <p class="eyebrow">Seller intake</p>
+          <h2>Tell us about your property</h2>
+          <p>Inherited, vacant, distressed, difficult to manage, or just ready to sell, this form gives you a clean intake flow right away.</p>
+        </div>
+        <form class="form" action="#" method="post">
+          <label>Full Name<input type="text" name="full_name" placeholder="Jane Seller" /></label>
+          <label>Phone<input type="tel" name="phone" placeholder="(555) 555-5555" /></label>
+          <label>Email<input type="email" name="email" placeholder="you@example.com" /></label>
+          <label>Property Address<input type="text" name="address" placeholder="123 Main St" /></label>
+          <label>City<input type="text" name="city" placeholder="Stillwater" /></label>
+          <label>State<input type="text" name="state" placeholder="OK" /></label>
+          <label>Asking Price<input type="text" name="asking_price" placeholder="$120,000" /></label>
+          <label>Timeline to Sell<input type="text" name="timeline" placeholder="ASAP / 30 days / flexible" /></label>
+          <label class="full">Tell us about the property<textarea name="message" rows="5" placeholder="Condition, occupancy, repairs, situation, anything important"></textarea></label>
+          <label class="checkbox full"><input type="checkbox" /> I agree to be contacted about this property.</label>
+          <button class="btn btn-primary" type="submit">Submit Property</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="properties" class="section">
+      <div class="container">
+        <p class="eyebrow">Available properties</p>
+        <h2>Opportunity board</h2>
+        <div class="cards">
+          <article class="card">
+            <h3>Stillwater Example Deal</h3>
+            <p>217 S Lowry St, Stillwater, OK</p>
+            <p class="muted">Placeholder listing card for the public inventory feed.</p>
+          </article>
+          <article class="card">
+            <h3>Owner Finance Listing</h3>
+            <p>Evansville example inventory</p>
+            <p class="muted">This section can later be powered directly from Airtable.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="investors" class="section alt">
+      <div class="container two-col">
+        <div>
+          <p class="eyebrow">Buyer list</p>
+          <h2>Join the investor list</h2>
+          <p>Capture buying criteria so dispo gets easier as the pipeline grows.</p>
+        </div>
+        <form class="form" action="#" method="post">
+          <label>Full Name<input type="text" name="buyer_name" /></label>
+          <label>Phone<input type="tel" name="buyer_phone" /></label>
+          <label>Email<input type="email" name="buyer_email" /></label>
+          <label>Markets of Interest<input type="text" name="markets" placeholder="OK, TX, AR" /></label>
+          <label>Preferred Strategy<input type="text" name="strategy" placeholder="Buy & Hold, Fix & Flip" /></label>
+          <label>Price Range<input type="text" name="price_range" placeholder="$50k-$250k" /></label>
+          <label class="full">Notes<textarea name="buyer_notes" rows="4"></textarea></label>
+          <button class="btn btn-primary" type="submit">Join Buyer List</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container two-col">
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h2>Ready to wire this into your real workflow</h2>
+          <p>This scaffold is ready for domain deployment and Airtable connection. Replace placeholders with your live contact info and automation endpoints.</p>
+        </div>
+        <div class="panel">
+          <p><strong>Email:</strong> hello@ruralhaven.co</p>
+          <p><strong>Phone:</strong> (000) 000-0000</p>
+          <p><strong>Markets:</strong> Rural and small-market opportunities</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

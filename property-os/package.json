@@ -1,0 +1,10 @@
+{
+  "name": "ruralhaven-property-os",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "python3 -m http.server 8080 -d app",
+    "build": "echo 'Static site scaffold ready'",
+    "start": "python3 -m http.server 8080 -d app"
+  }
+}
