@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rural Haven – Lead Intake</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .lead-intake-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    }
+    .lead-intake-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .lead-intake-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .lead-intake-header p {
+      color: #666;
+      font-size: 1.1rem;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .form-grid .full {
+      grid-column: 1 / -1;
+    }
+    .field-label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #355e3b;
+      box-shadow: 0 0 0 3px rgba(53, 94, 59, 0.1);
+    }
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    .form-actions {
+      grid-column: 1 / -1;
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 2rem;
+    }
+    .btn {
+      padding: 0.85rem 1.5rem;
+      border-radius: 999px;
+      border: none;
+      font-weight: 700;
+      font-family: 'Manrope', sans-serif;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .btn-primary {
+      background: #355e3b;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #2a4a2f;
+    }
+    .btn-secondary {
+      background: #f0f0f0;
+      color: #333;
+    }
+    .btn-secondary:hover {
+      background: #e0e0e0;
+    }
+    .status-message {
+      padding: 1rem;
+      border-radius: 10px;
+      margin-top: 1.5rem;
+      display: none;
+    }
+    .status-success {
+      background: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #a5d6a7;
+    }
+    .status-error {
+      background: #ffebee;
+      color: #c62828;
+      border: 1px solid #ef9a9a;
+    }
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .lead-intake-container {
+        margin: 1rem;
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="lead-intake-container">
+    <header class="lead-intake-header">
+      <h1>Submit a Property Lead</h1>
+      <p>Fill out this form to send a seller lead directly into the Rural Haven Property OS.</p>
+    </header>
+
+    <form id="leadForm">
+      <div class="form-grid">
+        <div class="full">
+          <label class="field-label">Lead Type</label>
+          <select name="lead_type" required>
+            <option value="">Select type</option>
+            <option value="seller">Seller</option>
+            <option value="buyer">Buyer / Investor</option>
+            <option value="wholesaler">Wholesaler</option>
+            <option value="agent">Agent</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="field-label">Full Name *</label>
+          <input type="text" name="full_name" required placeholder="Jane Seller" />
+        </div>
+        <div>
+          <label class="field-label">Phone *</label>
+          <input type="tel" name="phone" required placeholder="(555) 555-5555" />
+        </div>
+        <div>
+          <label class="field-label">Email</label>
+          <input type="email" name="email" placeholder="you@example.com" />
+        </div>
+        <div>
+          <label class="field-label">Best Time to Contact</label>
+          <input type="text" name="best_time" placeholder="Afternoons, evenings, etc." />
+        </div>
+
+        <div class="full">
+          <label class="field-label">Property Address</label>
+          <input type="text" name="address" placeholder="123 Main St" />
+        </div>
+        <div>
+          <label class="field-label">City</label>
+          <input type="text" name="city" placeholder="Stillwater" />
+        </div>
+        <div>
+          <label class="field-label">State</label>
+          <input type="text" name="state" placeholder="OK" maxlength="2" />
+        </div>
+        <div>
+          <label class="field-label">Asking Price</label>
+          <input type="text" name="asking_price" placeholder="$120,000" />
+        </div>
+        <div>
+          <label class="field-label">Timeline to Sell</label>
+          <input type="text" name="timeline" placeholder="ASAP, 30 days, flexible" />
+        </div>
+
+        <div class="full">
+          <label class="field-label">Property Condition / Notes</label>
+          <textarea name="condition_notes" placeholder="Vacant, needs repairs, inherited, distressed, etc."></textarea>
+        </div>
+
+        <div class="full">
+          <label class="field-label">Lead Source</label>
+          <select name="lead_source">
+            <option value="website">Website</option>
+            <option value="facebook">Facebook</option>
+            <option value="craigslist">Craigslist</option>
+            <option value="referral">Referral</option>
+            <option value="wholesaler">Wholesaler</option>
+            <option value="agent">Agent</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="full">
+          <label class="field-label">Additional Notes</label>
+          <textarea name="notes" placeholder="Any other details, motivation, situation, etc."></textarea>
+        </div>
+
+        <div class="full">
+          <label>
+            <input type="checkbox" name="consent" required />
+            I agree to be contacted about this property.
+          </label>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Submit Lead</button>
+      </div>
+    </form>
+
+    <div id="statusMessage" class="status-message"></div>
+  </div>
+
+  <script>
+    const GOOGLE_APPS_SCRIPT_URL = ''; // REPLACE WITH YOUR DEPLOYED WEB APP URL
+
+    document.getElementById('leadForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const statusEl = document.getElementById('statusMessage');
+
+      // Collect form data
+      const formData = new FormData(form);
+      const data = {
+        action: 'submit_lead',
+        lead_type: formData.get('lead_type'),
+        full_name: formData.get('full_name'),
+        phone: formData.get('phone'),
+        email: formData.get('email'),
+        best_time: formData.get('best_time'),
+        address: formData.get('address'),
+        city: formData.get('city'),
+        state: formData.get('state'),
+        asking_price: formData.get('asking_price'),
+        timeline: formData.get('timeline'),
+        condition_notes: formData.get('condition_notes'),
+        lead_source: formData.get('lead_source'),
+        notes: formData.get('notes')
+      };
+
+      // Validate
+      if (!data.full_name || !data.phone) {
+        showStatus('Please fill in required fields (name and phone).', 'error');
+        return;
+      }
+
+      if (!GOOGLE_APPS_SCRIPT_URL) {
+        showStatus('Form endpoint not configured. Please set GOOGLE_APPS_SCRIPT_URL.', 'error');
+        return;
+      }
+
+      // Submit
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+      statusEl.style.display = 'none';
+
+      try {
+        const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const result = await response.json();
+        if (result.success) {
+          showStatus('Lead submitted successfully! We’ll be in touch soon.', 'success');
+          form.reset();
+        } else {
+          showStatus('Error: ' + (result.error || 'Unknown error'), 'error');
+        }
+      } catch (err) {
+        showStatus('Network error: ' + err.message, 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Lead';
+      }
+    });
+
+    function showStatus(message, type) {
+      const el = document.getElementById('statusMessage');
+      el.textContent = message;
+      el.className = `status-message status-${type}`;
+      el.style.display = 'block';
+      setTimeout(() => {
+        el.style.display = 'none';
+      }, 8000);
+    }
+  </script>
+</body>
+</html>
