@@ -110,7 +110,47 @@ Before trading, answer these five questions:
 
 If these cannot be answered clearly, size down or do nothing.
 
+## Emotional Model
+
+This reference adds a useful core model:
+
+**emotion -> pain avoidance -> behavior -> result -> more pain**
+
+Trading mistakes usually do not begin with the market itself. They begin with an emotional attempt to escape discomfort.
+
+Examples:
+- fear of uncertainty -> hesitation or skipped valid trade
+- anger after losses -> revenge trading
+- greed after wins -> oversizing or overtrading
+- hope in a bad position -> failure to exit
+- FOMO -> entering outside plan
+
+This is why the main job is not to eliminate emotion. It is to:
+- notice it early
+- name it clearly
+- reduce its control over behavior
+- replace it with process
+
+Emotions are not good or bad. They are signals. The problem starts when they run execution.
+
 ## Psychological Failure Patterns to Watch
+
+### 0. Fear of uncertainty
+Fear is usually strongest before entry, not after.
+It comes from uncertainty, lack of trust in the plan, or lack of evidence from enough reps.
+
+Examples:
+- freezing on a valid setup
+- needing certainty before entry
+- hesitating after a recent losing streak
+- avoiding execution because the future feels unclear
+
+Response:
+- pre-plan the trade
+- use if/then rules
+- rely on tested probabilities, not prediction
+- increase reps and review data until conviction is earned
+- accept that losing streaks are part of the distribution
 
 ### 1. Coasting mindset
 This is the trading equivalent of depending on inheritance.
@@ -124,7 +164,7 @@ Response:
 - cut size
 - require written trade thesis before execution
 
-### 2. Scarcity mindset
+### 2. Scarcity mindset / FOMO
 Examples:
 - forcing trades because no setup has appeared yet
 - needing today's P&L to validate effort
@@ -134,6 +174,7 @@ Response:
 - remember there is always another trade
 - no FOMO entries outside plan
 - if urgency rises, wait 10 minutes and re-evaluate
+- if price is not at the intended location, treat it as no setup, not a missed opportunity
 
 ### 3. Ego / identity trading
 Examples:
@@ -146,17 +187,21 @@ Response:
 - invalidation level must be honored
 - no adding to losing trades unless preplanned and system-based
 
-### 4. Overconfidence after wins
+### 4. Greed / overconfidence after wins
 Examples:
 - loosening entry quality after green streaks
 - increasing size too fast
 - trading lower-quality afternoon setups because the day started strong
+- pushing harder than the edge allows
+- trying to squeeze every dollar from the move or from the day
 
 Response:
 - strongest rule: good P&L should make you more selective, not less
 - once near consistency or daily cap pressure, become defensive
+- focus on best trades, not max money extraction
+- money is the byproduct of process, not the direct target during execution
 
-### 5. Tilt after losses
+### 5. Tilt after losses / revenge trading
 Examples:
 - immediate re-entry
 - abandoning setup quality
@@ -166,6 +211,7 @@ Examples:
 Response:
 - mandatory reset after emotionally significant loss
 - breathe, journal, review screenshot, wait for a brand-new setup
+- ask: am I trading this signal, or am I trading the pain from the last result?
 
 ## Execution Checklist
 
@@ -178,6 +224,8 @@ Use before every trade.
 - What is the risk in dollars and percent?
 - Does this violate any prop-firm or consistency rule?
 - Am I taking this from clarity or from emotion?
+- What discomfort am I trying to escape right now?
+- If this trade loses, will I still believe it was a correct process trade?
 
 ### Day-trading checklist
 - Market regime identified
@@ -248,6 +296,25 @@ Score the week on:
 
 A strong week is not just green.
 A strong week is one where process stayed intact.
+
+## Building Conviction Through Reps
+
+Confidence is not something to chant into existence.
+Confidence is earned evidence.
+
+For any setup that matters, aim to build a sample large enough to trust:
+- screenshot reviews
+- tagged journal entries
+- setup statistics
+- losing streak observations
+- notes on what invalidates the pattern
+
+If conviction is low, the answer is usually one of these:
+- reduce size
+- simulate more
+- gather more examples
+- simplify the setup
+- stop pretending certainty should exist
 
 ## Daily Affirmations, but grounded
 These are not magic. They are reminders tied to behavior.
