@@ -290,6 +290,8 @@
 ## 2026‑05‑11 (Monday)
 - **OKC Flip Weekly Check-in**: Rehab still appears around 90% complete with no new expenses and no phase change. DB remains synced at $68,209.64 across 65 entries. Weekly check-in estimated holding costs near $11,995.96 and all-in total around $68,615.69, with May 13 still set as the next Excel reconciliation.
 - **NE Arizona Minerals Weekly Monitor**: Status upgraded from GREEN to YELLOW. Copper rose to $6.4665/lb, potash to $401.25/MT, and Altura Energy reported Saddle Horse Draw helium infrastructure work on schedule with near-term sales expected. Helium is now the lead watch item for Holbrook Basin follow-up.
+## 2026‑05‑13 (Wednesday)
+- **OKC Flip Reconciliation**: DB ↔ Excel match reconfirmed at $68,209.64, with DB showing 66 rows only because of a $0 TestAlert entry while Excel remains at 65. No new expenses since March 20. Purchase price discrepancy ($160k in Excel vs $210k in earlier notes) and rehab budget discrepancy ($55k calculator vs $75k DB, $70,900 summary planned rehab) both remain unresolved. Estimated current holding was revised up to about $16,300, with estimated all-in total near $72,920. Next reconciliation: May 20.
 
 ## Durable Themes
 - Communication platform preference is shifting toward Discord for better topic organization.
