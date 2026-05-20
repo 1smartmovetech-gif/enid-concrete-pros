@@ -295,6 +295,8 @@
 ## 2026‑05‑18 (Monday)
 - **OKC Flip Weekly Check-in**: Project still appears about 90% complete in final rehab, with no new expenses and no phase change after 9 weeks dormant since March 20. DB remains at $68,209.64, while estimated current holding rose near $16,953 and estimated all-in total near $73,573. Main operational question is whether the rehab is functionally complete and should move to listing prep before more holding cost accrues.
 - **NE Arizona Minerals Weekly Monitor**: Status remained YELLOW. No new AZGS publication, claim filing, Arizona entity filing, or policy trigger was confirmed. Altura Energy’s May 7 Holbrook Basin update remains the key live signal, potash held at $401.25/MT, helium commentary still points to $1,000 to $1,200/MCF spot pricing, and copper had no fresh verified quote beyond the May 11 reference.
+## 2026‑05‑20 (Wednesday)
+- **OKC Flip Reconciliation**: DB and Excel remained matched at $68,209.64 with no new expenses since March 20. Estimated current holding was about $16,868 and estimated all-in total about $73,488. Purchase price still remains unresolved because Excel continues to show $160k while prior notes had treated $210k as confirmed, and rehab budget still remains split across $55k in the calculator, $70,900 in Summary, and $75k in the tracking DB.
 
 ## Durable Themes
 - Communication platform preference is shifting toward Discord for better topic organization.
