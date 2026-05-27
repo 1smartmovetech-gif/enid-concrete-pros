@@ -300,6 +300,8 @@
 ## 2026‑05‑25 (Monday)
 - **OKC Flip Weekly Check-in**: Project still appears about 90% complete in final rehab, with no phase change after 10 straight weeks and no new expenses since March 20. DB and Excel remain synced at $68,209.64, while estimated current holding rose near $17,521 and estimated all-in total near $74,141. Main operational question remains whether the rehab is functionally complete and should move to listing prep before more holding cost accrues.
 - **NE Arizona Minerals Weekly Monitor**: Status remained YELLOW. Copper was freshly confirmed at $6.42/lb, potash held at $401.25/MT, and helium commentary still points to $1,000 to $1,200/MCF spot pricing around Holbrook Basin. No new AZGS publication, claim trigger, or regulatory change was confirmed, so helium remains the lead live signal into the June 1 review.
+## 2026‑05‑27 (Wednesday)
+- **OKC Flip Reconciliation**: Updated Excel resolved the purchase price in favor of $210k and aligned the FLIP CALCULATOR rehab budget to $75k. Seven new expenses totaling about $7,748 were imported, bringing project spend to roughly $79,158 and putting the rehab about $4,158 over budget. This materially reduced the projected profit at a $360k ARV to about $49k net after 6% sell costs.
 
 ## Durable Themes
 - Communication platform preference is shifting toward Discord for better topic organization.
