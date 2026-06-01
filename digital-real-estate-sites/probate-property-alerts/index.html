@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Probate Property Alerts</title>
+  <style>
+    :root { --bg:#09111f; --panel:#101b31; --text:#edf3ff; --muted:#9eb0d0; --accent:#73a6ff; --gold:#ffcc66; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,system-ui,sans-serif;background:linear-gradient(180deg,#09111f,#0f1730);color:var(--text);line-height:1.55}
+    .wrap{max-width:1140px;margin:0 auto;padding:28px 20px 64px}
+    .hero,.card{background:rgba(16,27,49,.88);border:1px solid rgba(255,255,255,.08);border-radius:22px}
+    .hero{padding:42px;margin-bottom:24px}
+    h1{font-size:clamp(2rem,5vw,3.6rem);margin-bottom:14px}
+    h2{font-size:1.9rem;margin-bottom:14px}
+    p{color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+    .card{padding:22px}
+    .btn{display:inline-block;margin-top:18px;text-decoration:none;background:var(--accent);color:#07101f;padding:12px 16px;border-radius:12px;font-weight:800}
+    .tag{display:inline-block;padding:7px 10px;border-radius:999px;background:rgba(255,204,102,.12);color:var(--gold);font-size:.85rem;font-weight:700;margin-bottom:16px}
+    .price{font-size:2.3rem;font-weight:800;color:#fff;margin:14px 0}
+    ul{padding-left:18px;color:var(--muted)}
+    li{margin:8px 0}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="tag">Investor data product concept</div>
+      <h1>Probate Property Alerts</h1>
+      <p>Get curated probate, inherited-property, tax-delinquent, and zombie-house leads before they’re cleaned up and marketed to everyone else. This is a subscription site concept for investors who want messy opportunities with less competition.</p>
+      <a class="btn" href="#plans">View plans</a>
+    </section>
+
+    <section class="grid" style="margin-bottom:24px;">
+      <div class="card">
+        <h2>What members get</h2>
+        <ul>
+          <li>Weekly probate and inherited-property deal drops</li>
+          <li>Estimated distress signals and title complexity notes</li>
+          <li>Owner or heir outreach status fields</li>
+          <li>Suggested exit angle, wholesale or cleanup/list</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Why this one matters</h2>
+        <ul>
+          <li>Recurring revenue instead of one-off lead sales</li>
+          <li>Can be local, statewide, or niche by county</li>
+          <li>Good fit if you want a digital real estate info product</li>
+          <li>Easy upsells: skip tracing, lists, consulting, JV deals</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="plans" class="grid">
+      <div class="card">
+        <div class="tag">Starter</div>
+        <div class="price">$99<span style="font-size:1rem;color:var(--muted)">/mo</span></div>
+        <ul>
+          <li>1 county watchlist</li>
+          <li>Weekly lead email</li>
+          <li>Basic deal notes</li>
+        </ul>
+        <a class="btn" href="#">Join starter</a>
+      </div>
+      <div class="card" style="border-color:rgba(115,166,255,.45)">
+        <div class="tag">Pro</div>
+        <div class="price">$299<span style="font-size:1rem;color:var(--muted)">/mo</span></div>
+        <ul>
+          <li>Up to 5 counties</li>
+          <li>Priority alerts</li>
+          <li>Title issue tags and complexity score</li>
+          <li>Monthly investor call</li>
+        </ul>
+        <a class="btn" href="#">Join pro</a>
+      </div>
+      <div class="card">
+        <div class="tag">Done-with-you</div>
+        <div class="price">Custom</div>
+        <ul>
+          <li>Bespoke market setup</li>
+          <li>Lead workflow integration</li>
+          <li>Buyer list and disposition support</li>
+        </ul>
+        <a class="btn" href="#">Book a demo</a>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

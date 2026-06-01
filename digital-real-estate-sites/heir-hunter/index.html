@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heir Hunter | Inherited Property Solutions</title>
+  <style>
+    :root {
+      --bg:#f6f7fb; --text:#172033; --muted:#58627a; --accent:#2347ff; --dark:#10182b; --green:#0f9f6e;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
+    .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+    .hero{background:linear-gradient(135deg,#10182b,#1c2d57);color:#fff;padding:72px 0}
+    .hero-grid,.steps,.faq,.proof{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+    .hero-copy h1{font-size:clamp(2.2rem,5vw,4rem);line-height:1.05;margin:12px 0 16px}
+    .hero-copy p{color:#c9d4ef;max-width:660px}
+    .badge{display:inline-block;background:rgba(255,255,255,.12);padding:8px 12px;border-radius:999px;font-weight:700;font-size:.9rem}
+    .panel{background:#fff;border-radius:20px;padding:24px;box-shadow:0 18px 40px rgba(16,24,43,.10)}
+    .panel h3{margin-bottom:8px}
+    .panel p,.muted{color:var(--muted)}
+    .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+    .btn{display:inline-block;text-decoration:none;padding:13px 18px;border-radius:12px;font-weight:700}
+    .btn.primary{background:var(--accent);color:#fff}
+    .btn.secondary{background:#fff;color:var(--dark)}
+    section{padding:56px 0}
+    h2{font-size:2rem;margin-bottom:14px}
+    ul{padding-left:18px;color:var(--muted)}
+    li{margin:8px 0}
+    .step,.faq-item,.proof-item{background:#fff;border-radius:18px;padding:22px;box-shadow:0 14px 32px rgba(16,24,43,.07)}
+    .step strong,.proof-item strong{display:block;margin-bottom:8px}
+    .lead-form{display:grid;gap:12px}
+    input,textarea,select{width:100%;padding:13px 14px;border:1px solid #d5dbeb;border-radius:12px;font:inherit}
+    .mini{font-size:.92rem;color:var(--muted)}
+    footer{padding:30px 0 60px;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <div class="badge">Inherited house, title mess, multiple heirs?</div>
+        <h1>We help families sell inherited properties without getting stuck in probate chaos.</h1>
+        <p>Heir Hunter is built for owners dealing with inherited houses, unclear title, out-of-state heirs, tax issues, or abandoned property headaches. We simplify the process, coordinate the moving pieces, and make cash offers when it makes sense.</p>
+        <div class="cta">
+          <a class="btn primary" href="#form">Get a free property review</a>
+          <a class="btn secondary" href="#how">How it works</a>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Fast fit check</h3>
+        <p class="muted">This site is ideal for leads dealing with:</p>
+        <ul>
+          <li>Inherited houses with several heirs</li>
+          <li>Old liens, taxes, or title confusion</li>
+          <li>Vacant or distressed family properties</li>
+          <li>Probate fatigue and delayed closings</li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <section id="how">
+    <div class="wrap">
+      <h2>How Heir Hunter works</h2>
+      <div class="steps">
+        <div class="step"><strong>1. Review the property file</strong><span class="muted">We look at ownership, liens, taxes, occupancy, and obvious title problems.</span></div>
+        <div class="step"><strong>2. Map the decision makers</strong><span class="muted">We identify heirs, signatures needed, and the cleanest path to a sale.</span></div>
+        <div class="step"><strong>3. Present options</strong><span class="muted">Cash offer, cleanup-and-list strategy, or title resolution roadmap.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap proof">
+      <div class="proof-item"><strong>Why this converts</strong><span class="muted">It targets a painful niche with real urgency and little polished competition.</span></div>
+      <div class="proof-item"><strong>Monetization path</strong><span class="muted">Direct acquisitions, referral fees, probate lead resale, or local SEO ranking by city.</span></div>
+      <div class="proof-item"><strong>Expansion path</strong><span class="muted">Clone by market: Oklahoma City inherited house help, Tulsa probate house buyers, etc.</span></div>
+    </div>
+  </section>
+
+  <section id="form">
+    <div class="wrap hero-grid">
+      <div>
+        <h2>Request a free inherited property review</h2>
+        <p class="muted">This is the core CTA. In production I’d wire this into Google Sheets, Supabase, Airtable, or your current Property OS.</p>
+      </div>
+      <form class="panel lead-form">
+        <input type="text" placeholder="Your name" />
+        <input type="text" placeholder="Phone or email" />
+        <input type="text" placeholder="Property address" />
+        <select>
+          <option>What best describes the situation?</option>
+          <option>Inherited property</option>
+          <option>Probate in progress</option>
+          <option>Multiple heirs</option>
+          <option>Title issue / liens</option>
+        </select>
+        <textarea rows="5" placeholder="Tell us what's going on"></textarea>
+        <a class="btn primary" href="#">Submit review request</a>
+        <div class="mini">Prototype CTA only, no backend connected yet.</div>
+      </form>
+    </div>
+  </section>
+
+  <footer class="wrap">Heir Hunter prototype, built for Nathan as a distressed-property digital asset concept.</footer>
+</body>
+</html>

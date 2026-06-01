@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Title Problem Scorer</title>
+  <style>
+    :root { --bg:#f4f6fb; --card:#ffffff; --text:#1a2238; --muted:#66718a; --accent:#5d6bff; --danger:#db4b68; --warn:#eea63a; --good:#1ca67a; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+    .wrap{max-width:1100px;margin:0 auto;padding:30px 20px 60px}
+    .hero{margin-bottom:24px}
+    h1{font-size:clamp(2rem,5vw,3.3rem);margin-bottom:12px}
+    p{color:var(--muted)}
+    .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px}
+    .card{background:var(--card);border-radius:20px;padding:24px;box-shadow:0 16px 36px rgba(33,47,89,.08)}
+    .field{margin-bottom:14px}
+    label{display:block;font-weight:700;margin-bottom:8px}
+    select,input{width:100%;padding:12px 14px;border:1px solid #d7ddec;border-radius:12px;font:inherit}
+    button{background:var(--accent);color:#fff;border:none;padding:13px 18px;border-radius:12px;font-weight:800;cursor:pointer;width:100%}
+    .score{font-size:3rem;font-weight:900;margin:8px 0}
+    .meter{height:12px;background:#e8ecf7;border-radius:999px;overflow:hidden;margin:14px 0 18px}
+    .meter > div{height:100%;width:0;background:linear-gradient(90deg,var(--good),var(--warn),var(--danger));transition:width .3s ease}
+    .tag{display:inline-block;padding:6px 10px;border-radius:999px;background:#eef1ff;color:#4252ff;font-size:.85rem;font-weight:700;margin-bottom:10px}
+    .list{padding-left:18px;color:var(--muted)}
+    .list li{margin:8px 0}
+    @media (max-width: 900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="tag">Interactive lead magnet concept</div>
+      <h1>Title Problem Scorer</h1>
+      <p>This tool-style website helps investors quickly rate whether a messy property is a throwaway lead, a medium-complexity flip, or a high-margin title-resolution play.</p>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <div class="field">
+          <label>How many heirs or owners are involved?</label>
+          <select id="heirs">
+            <option value="0">1 owner / simple</option>
+            <option value="10">2-3 owners</option>
+            <option value="20">4+ owners</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Current title issue level</label>
+          <select id="title">
+            <option value="5">Minor paperwork gap</option>
+            <option value="18">Clouded title or probate friction</option>
+            <option value="30">Broken chain / severe title complexity</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Tax or lien burden</label>
+          <select id="liens">
+            <option value="5">Low</option>
+            <option value="15">Moderate</option>
+            <option value="25">Heavy</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Property distress</label>
+          <select id="condition">
+            <option value="5">Light cosmetic</option>
+            <option value="12">Needs meaningful rehab</option>
+            <option value="20">Severe distress / vacant / boarded</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Estimated equity spread (%)</label>
+          <input id="equity" type="number" value="35" min="0" max="100" />
+        </div>
+        <button onclick="scoreDeal()">Score this deal</button>
+      </div>
+
+      <div class="card">
+        <p class="tag">Deal complexity result</p>
+        <div id="label" style="font-weight:800;font-size:1.2rem;">Run the scorer</div>
+        <div class="score" id="score">0</div>
+        <div class="meter"><div id="bar"></div></div>
+        <p id="summary">Choose the factors on the left to estimate how attractive this messy deal might be.</p>
+        <ul class="list" id="notes">
+          <li>Use this as a lead magnet to capture investor or seller info.</li>
+          <li>Could upsell into consulting, acquisitions, or a paid deal desk.</li>
+          <li>Good authority play because it feels like a proprietary tool.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function scoreDeal() {
+      const heirs = Number(document.getElementById('heirs').value);
+      const title = Number(document.getElementById('title').value);
+      const liens = Number(document.getElementById('liens').value);
+      const condition = Number(document.getElementById('condition').value);
+      const equity = Number(document.getElementById('equity').value || 0);
+
+      let score = heirs + title + liens + condition;
+      score += Math.max(0, Math.min(30, equity * 0.6));
+      score = Math.min(100, Math.round(score));
+
+      let label = 'Low upside';
+      let summary = 'This looks fairly ordinary or too thin to justify a complex title play.';
+      if (score >= 70) {
+        label = 'High-margin treasure hunt';
+        summary = 'This is the kind of messy, underworked situation that can justify a specialized acquisition push.';
+      } else if (score >= 45) {
+        label = 'Worth deeper review';
+        summary = 'There may be enough friction and spread here to create a solid off-market opportunity.';
+      }
+
+      document.getElementById('score').textContent = score;
+      document.getElementById('label').textContent = label;
+      document.getElementById('summary').textContent = summary;
+      document.getElementById('bar').style.width = score + '%';
+    }
+  </script>
+</body>
+</html>
