@@ -14,6 +14,14 @@ Active / ongoing - Weekly monitoring system operational.
 
 ## Recent Developments
 
+### June 1, 2026 — Weekly Monitor — Status YELLOW
+- **Copper**: $6.45/lb, up about 0.5% week over week from $6.42/lb and still supportive for Arizona mining sentiment.
+- **Potash**: $401.25/MT, unchanged week over week and still below the $450 trigger.
+- **Helium**: conservative benchmark still around $330/MCF, while local/operator spot commentary still points to roughly $1,000 to $1,200/MCF.
+- **New research**: no new AZGS publication, BLM claim filing, Arizona entity filing, or policy change was confirmed, but Altura Energy announced on May 28 that the helium pipeline project was completed and 6 wells were tied into the processing facility at Pinta South / Saddle Horse Draw in the Holbrook Basin. That is a materially stronger operating milestone than the prior near-term tie-in language.
+- **Recommended next focus**: keep helium as the lead watch item and prioritize manual records checks next cycle across BLM MLRS claims, Arizona Corporation Commission entities, and tribal/state permitting references tied to helium or potash names.
+- **Alert status**: YELLOW, with helium still the live trigger and no escalation to RED.
+
 ### May 25, 2026 — Weekly Monitor — Status YELLOW
 - **Copper**: $6.42/lb on May 25, down about 0.7% from the May 11 reference of $6.4665/lb but still supportive for Arizona mining economics.
 - **Potash**: $401.25/MT for April 2026, unchanged week over week and still below the $450 trigger.

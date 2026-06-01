@@ -302,6 +302,10 @@
 - **NE Arizona Minerals Weekly Monitor**: Status remained YELLOW. Copper was freshly confirmed at $6.42/lb, potash held at $401.25/MT, and helium commentary still points to $1,000 to $1,200/MCF spot pricing around Holbrook Basin. No new AZGS publication, claim trigger, or regulatory change was confirmed, so helium remains the lead live signal into the June 1 review.
 ## 2026‑05‑27 (Wednesday)
 - **OKC Flip Reconciliation**: Updated Excel resolved the purchase price in favor of $210k and aligned the FLIP CALCULATOR rehab budget to $75k. Seven new expenses totaling about $7,748 were imported, bringing project spend to roughly $79,158 and putting the rehab about $4,158 over budget. This materially reduced the projected profit at a $360k ARV to about $49k net after 6% sell costs.
+## 2026‑06‑01 (Monday)
+- **OKC Flip Weekly Check-in**: Project still appears stuck in final rehab at about 90% complete after 11 straight weeks with no phase advance to listing prep. No new expenses were recorded after the May 27 reconciliation batch, but holding costs continue near $81/day, with estimated total spend near $77,095 and estimated basis near $287,095.
+- **NE Arizona Minerals Weekly Monitor**: Status remained YELLOW. Copper ticked up to $6.45/lb, potash held at $401.25/MT, and helium remained the lead live signal. Altura Energy's May 28 pipeline completion and 6-well tie-in at Pinta South / Saddle Horse Draw materially strengthened the operating case around Holbrook Basin helium.
+- **Home care reminder**: Spray for ticks and mosquitos using 0.5 oz Bifen I/T per gallon around the yard perimeter and tall grass edges, repeating monthly through October.
 
 ## Durable Themes
 - Communication platform preference is shifting toward Discord for better topic organization.
