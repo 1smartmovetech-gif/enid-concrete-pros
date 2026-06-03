@@ -306,6 +306,8 @@
 - **OKC Flip Weekly Check-in**: Project still appears stuck in final rehab at about 90% complete after 11 straight weeks with no phase advance to listing prep. No new expenses were recorded after the May 27 reconciliation batch, but holding costs continue near $81/day, with estimated total spend near $77,095 and estimated basis near $287,095.
 - **NE Arizona Minerals Weekly Monitor**: Status remained YELLOW. Copper ticked up to $6.45/lb, potash held at $401.25/MT, and helium remained the lead live signal. Altura Energy's May 28 pipeline completion and 6-well tie-in at Pinta South / Saddle Horse Draw materially strengthened the operating case around Holbrook Basin helium.
 - **Home care reminder**: Spray for ticks and mosquitos using 0.5 oz Bifen I/T per gallon around the yard perimeter and tall grass edges, repeating monthly through October.
+## 2026‑06‑03 (Wednesday)
+- **OKC Flip Reconciliation**: Excel was updated with 7 missing entries totaling about $7,748, and the rehab budget field in the tracker was updated from $55k to $75k. Current DB total is about $75,958 across 74 entries, with rehab spend near $60,637 and holding costs near $15,320. The tracker still shows a $160k purchase price, explicitly left unresolved pending Nathan's confirmation on whether it should be changed to $210k.
 
 ## Durable Themes
 - Communication platform preference is shifting toward Discord for better topic organization.
