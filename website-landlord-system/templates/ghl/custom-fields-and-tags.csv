@@ -1,0 +1,12 @@
+type,name,key_or_value
+custom_field,Lead Source Site,lead_source_site
+custom_field,Lead City,lead_city
+custom_field,Lead Service,lead_service
+custom_field,Landing Page URL,landing_page_url
+custom_field,Lead Status Notes,lead_status_notes
+tag,niche:junk-removal,niche:junk-removal
+tag,city:austin,city:austin
+tag,model:rank-rent,model:rank-rent
+tag,source:organic,source:organic
+tag,source:form,source:form
+tag,source:call,source:call
