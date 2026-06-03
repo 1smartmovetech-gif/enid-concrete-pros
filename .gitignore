@@ -1,0 +1,16 @@
+# Cloudflare
+wrangler.toml
+.env
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+.python-version
+
+# Environment
+.env.local
+.env.development
+.env.production
+
+.venv_numbers/
