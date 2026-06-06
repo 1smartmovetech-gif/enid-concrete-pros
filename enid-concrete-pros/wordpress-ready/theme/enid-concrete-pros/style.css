@@ -1,0 +1,11 @@
+/*
+Theme Name: Enid Concrete Pros
+Theme URI: https://example.com/
+Author: Ginger
+Description: Lightweight WordPress theme scaffold for the Enid Concrete Pros local lead-generation site.
+Version: 1.0.0
+Text Domain: enid-concrete-pros
+*/
+
+:root{--bg:#f6f7fb;--surface:#ffffff;--ink:#182233;--muted:#61708a;--line:#dde5f2;--brand:#1f5eff;--brand-dark:#15357d;--accent:#0c8f61}
+*{box-sizing:border-box}body{font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;margin:0}.site-header{background:#15357d;color:#fff;padding:12px 20px}.site-wrap{max-width:1160px;margin:0 auto;padding:0 20px}.hero{background:linear-gradient(135deg,#15357d,#1f5eff);color:#fff;padding:70px 0}.section{padding:56px 0}.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 16px 36px rgba(16,24,43,.08)}.btn{display:inline-block;text-decoration:none;padding:13px 18px;border-radius:12px;font-weight:800;background:#fff;color:#15357d}.site-footer{background:#0f172a;color:#ced7ea;padding:28px 20px;margin-top:24px}
