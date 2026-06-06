@@ -1,0 +1,9 @@
+# Unresolved Placeholders
+
+- `[PHONE NUMBER]`
+- `[EMAIL ADDRESS]`
+- `[BUSINESS ADDRESS]`
+- `[LOGO FILE]`
+- `[FORM DESTINATION]`
+- `[TRACKING NUMBER]`
+- `[GA4 / GSC / PIXEL IDS]`
