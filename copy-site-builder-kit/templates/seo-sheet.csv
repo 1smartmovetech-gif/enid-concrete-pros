@@ -1,0 +1,6 @@
+Page,URL,Primary Keyword,SEO Title,Meta Description,Intent,Notes
+Home,/,"[primary keyword] [city]","[Primary Keyword] [City] | Compare Local Providers","Compare local options for [primary keyword] in [city]. Request quotes, review service options, and connect with local providers.",Commercial,"Independent guide positioning"
+About,/about-this-guide/,"about this guide [city]","About This Guide | [Site Name]","Learn how [Site Name] helps visitors compare local service providers and request quotes.",Informational,"Add disclaimer"
+Contact,/contact/,"contact [site name]","Request Quotes | [Site Name]","Send your project details and request quotes from local providers.",Commercial,"Lead form page"
+Primary Service,/primary-service/,"[primary keyword]","[Primary Keyword] [City] | Request Local Quotes","Learn about [primary keyword] in [city], compare service options, and request quotes from local providers.",Commercial,"Main money page"
+Service 1,/service-1/,"[service 1] [city]","[Service 1] [City] | Compare Local Providers","Review [service 1] options in [city] and request quotes from local providers.",Commercial,"Supporting service page"
