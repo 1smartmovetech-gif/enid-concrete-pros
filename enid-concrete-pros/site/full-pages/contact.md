@@ -31,6 +31,6 @@ Use the form below to share the basics of your project.
 Submitting this form does not guarantee service availability, contractor acceptance, scheduling, or final pricing. This website operates as an independent local guide unless ownership details are updated.
 
 ## Contact placeholders
-- Phone: `[PHONE NUMBER]`
+- Phone: `816-575-9987`
 - Email: `[EMAIL ADDRESS]`
 - Address: `[BUSINESS ADDRESS]`

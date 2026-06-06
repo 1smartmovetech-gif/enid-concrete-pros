@@ -20,8 +20,11 @@ The prototype now includes five real image files:
 - `assets/slab.jpg`
 - `assets/repair.jpg`
 
+## Current tracking number
+- `816-575-9987`
+
 ## Tracking number placement points
-Replace `[PHONE NUMBER]` in these locations first:
+This number should appear in these locations:
 - top utility bar
 - hero phone display
 - click-to-call CTA hrefs once added in WordPress
@@ -42,6 +45,6 @@ Replace `[PHONE NUMBER]` in these locations first:
 ## Fastest path
 1. confirm whether GHL is active
 2. if yes, get one tracking number
-3. replace `[PHONE NUMBER]`
+3. replace placeholders with `816-575-9987`
 4. convert every visible number to `tel:` links in WordPress
 5. test call routing and lead notifications

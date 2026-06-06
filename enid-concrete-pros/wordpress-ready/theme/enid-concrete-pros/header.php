@@ -9,6 +9,6 @@
 <?php wp_body_open(); ?>
 <header class="site-header">
   <div class="site-wrap">
-    <strong><?php bloginfo('name'); ?></strong> | Independent local guide | [PHONE NUMBER]
+    <strong><?php bloginfo('name'); ?></strong> | Independent local guide | <a href="tel:8165759987" style="color:#fff;">816-575-9987</a>
   </div>
 </header>
