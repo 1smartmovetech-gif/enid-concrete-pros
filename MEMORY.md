@@ -308,6 +308,9 @@
 - **Home care reminder**: Spray for ticks and mosquitos using 0.5 oz Bifen I/T per gallon around the yard perimeter and tall grass edges, repeating monthly through October.
 ## 2026‑06‑03 (Wednesday)
 - **OKC Flip Reconciliation**: Excel was updated with 7 missing entries totaling about $7,748, and the rehab budget field in the tracker was updated from $55k to $75k. Current DB total is about $75,958 across 74 entries, with rehab spend near $60,637 and holding costs near $15,320. The tracker still shows a $160k purchase price, explicitly left unresolved pending Nathan's confirmation on whether it should be changed to $210k.
+## 2026‑06‑08 (Monday)
+- **OKC Flip Weekly Check-in**: Project is still stuck in Rehab - Final at about 90% complete after 12 straight weeks with no phase advance to listing prep. No new expenses were recorded after the June 3 reconciliation, and estimated total cost rose to about $76,364 as holding costs continued around $81/day.
+- **NE Arizona Minerals Weekly Monitor**: Status remained YELLOW. Copper softened to about $6.361/lb, potash macro tone weakened as fertilizer prices eased, and helium remained the lead live signal. A 2026 GeoConvention abstract on Holbrook Basin helium was identified as the best new research lead for next-pass manual review.
 
 ## Durable Themes
 - Communication platform preference is shifting toward Discord for better topic organization.

@@ -14,6 +14,14 @@ Active / ongoing - Weekly monitoring system operational.
 
 ## Recent Developments
 
+### June 8, 2026 — Weekly Monitor — Status YELLOW
+- **Copper**: $6.361/lb on June 8, down about 1.4% from last week's $6.45/lb, but still strong and supportive background for Arizona mining sentiment.
+- **Potash**: latest directly confirmed public benchmark this pass was $380.63/MT from March 2026 monthly data, while World Bank macro tone showed fertilizer prices easing 4.3% in May, which is not supportive of a near-term Holbrook breakout.
+- **Helium**: no new broad benchmark was confirmed, so the conservative base case remains about $330/MCF, while prior local/operator commentary still points to roughly $1,000 to $1,200/MCF spot conditions around Holbrook Basin.
+- **New research**: no new AZGS NE Arizona-specific publication was confirmed, but a 2026 GeoConvention abstract titled "The Holbrook Basin - Mega Helium Source or Teaser Play" was identified as a potentially useful lead and should get a cleaner manual read next cycle.
+- **Recommended next focus**: keep helium as the lead watch item, do a manual MLRS and county-record pass for Apache and Navajo counties, and pull the GeoConvention helium abstract into the research stack for geologic detail extraction.
+- **Alert status**: YELLOW, with helium still the live trigger and no escalation to RED.
+
 ### June 1, 2026 — Weekly Monitor — Status YELLOW
 - **Copper**: $6.45/lb, up about 0.5% week over week from $6.42/lb and still supportive for Arizona mining sentiment.
 - **Potash**: $401.25/MT, unchanged week over week and still below the $450 trigger.
